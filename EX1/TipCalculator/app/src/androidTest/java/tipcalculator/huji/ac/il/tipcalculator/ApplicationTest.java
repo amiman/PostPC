@@ -1,4 +1,4 @@
-package tipcalculator.huji.ac.il.tipcalculator;
+package il.huji.ac.il.tipcalculator;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

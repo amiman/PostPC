@@ -1,4 +1,4 @@
-package tipcalculator.huji.ac.il.tipcalculator;
+package il.ac.huji.tipcalculator;
 
 /**
  * Created by amitai on 05/03/15.

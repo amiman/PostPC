@@ -1,6 +1,5 @@
-package tipcalculator.huji.ac.il.tipcalculator;
+package il.ac.huji.tipcalculator;
 
-import android.content.DialogInterface;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -23,19 +22,19 @@ public class TipCalculatorActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tip_calculator);
+        setContentView(il.ac.huji.tipcalculator.R.layout.activity_tip_calculator);
 
         // Create the TipCalculator
         mTipCalculator = new TipCalculator(12);
 
         // Add listeners to calculator button
-        Button btnCalculator = (Button) findViewById(R.id.btnCalculate);
+        Button btnCalculator = (Button) findViewById(il.ac.huji.tipcalculator.R.id.btnCalculate);
         btnCalculator.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
                 // First: Get the value of the bill
-                TextView billView = (TextView) findViewById(R.id.edtBillAmount);
+                TextView billView = (TextView) findViewById(il.ac.huji.tipcalculator.R.id.edtBillAmount);
 
                 // Second: Check that the string is a valid number
                 String billStr  = billView.getText().toString();
@@ -46,13 +45,13 @@ public class TipCalculatorActivity extends ActionBarActivity {
                 }
 
                 // Third: Get the check box
-                CheckBox roundCheckBox = (CheckBox) findViewById(R.id.chkRound);
+                CheckBox roundCheckBox = (CheckBox) findViewById(il.ac.huji.tipcalculator.R.id.chkRound);
 
                 // Forth: use the tip calculator
                 double tipValue = mTipCalculator.CalculateTip(Double.parseDouble(billStr),roundCheckBox.isChecked());
 
                 // Fifth: display the tip
-                TextView tipView = (TextView) findViewById(R.id.txtTipResult);
+                TextView tipView = (TextView) findViewById(il.ac.huji.tipcalculator.R.id.txtTipResult);
                 tipView.setText(TIP + DOLLAR_SIGN + String.valueOf(tipValue));
 
             }
@@ -63,7 +62,7 @@ public class TipCalculatorActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_tip_calculator, menu);
+        getMenuInflater().inflate(il.ac.huji.tipcalculator.R.menu.menu_tip_calculator, menu);
         return true;
     }
 
@@ -75,7 +74,7 @@ public class TipCalculatorActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == il.ac.huji.tipcalculator.R.id.action_settings) {
             return true;
         }
 
