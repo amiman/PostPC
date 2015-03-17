@@ -7,5 +7,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="New Text"
-        android:id="@+id/listItemText" />
+        android:id="@+id/listItemText"
+        android:textSize="@dimen/text_size" />
 </LinearLayout>
