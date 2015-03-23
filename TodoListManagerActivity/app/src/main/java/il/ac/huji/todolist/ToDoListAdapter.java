@@ -2,13 +2,18 @@ package il.ac.huji.todolist;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.text.format.DateFormat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,6 +21,7 @@ import java.util.List;
  */
 public class ToDoListAdapter extends ArrayAdapter<ToDoItem> {
 
+    private final static String NO_DUE_DATE = "No Due Date";
     private final Context mContext;
     private final List<ToDoItem> mObjects;
 
@@ -33,16 +39,25 @@ public class ToDoListAdapter extends ArrayAdapter<ToDoItem> {
 
         // Second: get the id for the item text in order to change ot to the appropriate text according to the position
         View rowView = inflater.inflate(R.layout.list_todo_item, parent, false);
-        TextView itemText = (TextView) rowView.findViewById(R.id.listItemText);
+        TextView itemText = (TextView) rowView.findViewById(R.id.txtTodoTitle);
+        TextView itemDate = (TextView) rowView.findViewById(R.id.txtTodoDueDate);
 
         // Third: change the text according to the position
+        SimpleDateFormat formatter = new SimpleDateFormat("dd-MMM-yyyy");
         itemText.setText(mObjects.get(position).GetText());
+        if(mObjects.get(position).GetDate()!= null) {
+            itemDate.setText(formatter.format(mObjects.get(position).GetDate()));
 
-        // Forth: change color of the text according gto the position
-        if(position % 2 == 0) {
-            itemText.setTextColor(Color.RED);
+            // Forth: change color for the overdue items
+            Calendar c = Calendar.getInstance();
+            Date currentDate = c.getTime();
+
+            if (currentDate.after(mObjects.get(position).GetDate())) {
+                itemText.setTextColor(Color.RED);
+                itemDate.setTextColor(Color.RED);
+            }
         } else {
-            itemText.setTextColor(Color.BLUE);
+            itemDate.setText(NO_DUE_DATE);
         }
 
         return rowView;

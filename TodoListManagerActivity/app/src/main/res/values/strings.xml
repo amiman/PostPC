@@ -6,5 +6,9 @@
     <string name="action_settings">Settings</string>
     <string name="add_item_to_list">Add</string>
     <string name="delete_item_list">Delete Item</string>
+    <string name="title_activity_add_new_todo_item">AddNewTodoItemActivity</string>
+    <string name="btn_ok">OK</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="radio_button_use_date_picker">USE DATE PICKER</string>
 
 </resources>
