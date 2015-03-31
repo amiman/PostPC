@@ -3,6 +3,7 @@ package il.ac.huji.todolist;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
 import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
@@ -105,20 +106,24 @@ public class TodoListManagerActivity extends ActionBarActivity {
     {
         super.onCreateContextMenu(menu, v, menuInfo);
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) menuInfo;
+        getMenuInflater().inflate(R.menu.context_menu, menu);
 
-        menu.add(0, 0, 0, DELETE_ITEM);
+        //menu.add(0, 0, 0, DELETE_ITEM);
         String itemText = mToDoList.get(info.position).GetText();
+        menu.setHeaderTitle(itemText);
+        menu.getItem(0).setTitle(DELETE_ITEM);
         //Date itemDate = mToDoList.get(info.position).GetDate();
 
-        menu.setHeaderTitle(itemText);
+        //menu.setHeaderTitle(itemText);
         // check if the title is calling someone
         final String[]  itemTextPart = itemText.split(" ");
         if (itemTextPart.length == 2 && itemTextPart[0].equals("call")) {
             // it is a call itemToDo create another button for calling
-            menu.add(0, 1, 0, itemText);
+            //menu.add(0, 1, 0, itemText);
+            menu.getItem(1).setTitle(itemText);
+        } else {
+            menu.getItem(1).setEnabled(false);
         }
-
-
     }
 
     @Override
@@ -126,14 +131,14 @@ public class TodoListManagerActivity extends ActionBarActivity {
     {
         AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo)item.getMenuInfo();
         String itemText = mToDoList.get(info.position).GetText();
-        if(item.getItemId()==0) {
+        if(item.getItemId()==R.id.menuItemDelete) {
             // Delete item from list
             // First: delete item from list
             mToDoList.remove(info.position);
             // Second: redraw list
             mAdapter.notifyDataSetChanged();
 
-        } else if(item.getItemId()==1) {
+        } else if(item.getItemId()==R.id.menuItemCall) {
             // Call
             final String[]  itemTextPart = itemText.split(" ");
             Intent dial = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:"+itemTextPart[1]));
