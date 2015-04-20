@@ -24,6 +24,7 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import com.parse.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -41,30 +42,44 @@ public class TodoListManagerActivity extends ActionBarActivity {
     static final String DELETE_ITEM = "Delete Item";
 
 
+    static final boolean SQL_OR_PARSE = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_todo_list_manager);
 
-        // Create dbhelper and Load data of todo_items from the to todo_db
-        mDBheleper = new DBHeleper(this.getApplicationContext());
+        if(SQL_OR_PARSE) {
+            // Enable Local Datastore.
+            Parse.enableLocalDatastore(this);
 
-        // Create the array list for the items
-        this.mToDoList = mDBheleper.GetAllItems();
+            Parse.initialize(this, "uzO4ZBpJPzN5YYxSJdRpkKrRrT6fo7hSFOlkNV58", "TAkUJvBdJ9QJhO7Newbqd0M3Nu14ub4DUFVxXIWk");
 
-        // Connect the list view to the arrayList
-        this.mAdapter = new ToDoListAdapter(this.getApplicationContext(), R.id.list_item, mToDoList);
-        this.mToDoListView = (ListView) findViewById(R.id.lstTodoItems);
-        this.mToDoListView.setAdapter(mAdapter);
-        //String from[] = {mDBheleper.DB_FIELD_TITLE ,mDBheleper.DB_FIELD_DUE};
-        //int to[] = {R.id.txtTodoTitle,R.id.txtTodoDueDate};
-        //this.mToDoListView.setAdapter(new SimpleCursorAdapter(this.getApplicationContext(),R.id.list_item,cursor,from,to,0));
+            ParseObject testObject = new ParseObject("TestObject");
+            testObject.put("foo", "bar");
+            testObject.saveInBackground();
+        } else {
 
-        // register the listview to context menu
-        registerForContextMenu(mToDoListView);
+            // Create dbhelper and Load data of todo_items from the to todo_db
+            mDBheleper = new DBHeleper(this.getApplicationContext());
 
-        // create the db helper in order to communicate with sqlite data base
-        this.mDBheleper = new DBHeleper(this);
+            // Create the array list for the items
+            this.mToDoList = mDBheleper.GetAllItems();
+
+
+            // Connect the list view to the arrayList
+            this.mAdapter = new ToDoListAdapter(this.getApplicationContext(), R.id.list_item, mToDoList);
+            this.mToDoListView = (ListView) findViewById(R.id.lstTodoItems);
+            this.mToDoListView.setAdapter(mAdapter);
+            //String from[] = {mDBheleper.DB_FIELD_TITLE ,mDBheleper.DB_FIELD_DUE};
+            //int to[] = {R.id.txtTodoTitle,R.id.txtTodoDueDate};
+            //this.mToDoListView.setAdapter(new SimpleCursorAdapter(this.getApplicationContext(),R.id.list_item,cursor,from,to,0));
+
+            // register the listview to context menu
+            registerForContextMenu(mToDoListView);
+
+            // create the db helper in order to communicate with sqlite data base
+            this.mDBheleper = new DBHeleper(this);
+        }
 
     }
 
